@@ -91,6 +91,7 @@ def graphData(data, function, startdate, enddate):
     locator = mdates.AutoDateLocator(minticks=5, maxticks=12)
     date_formatter = mdates.ConciseDateFormatter(locator)
     ax.xaxis_date()
+    ax.set_xlim(mdates.date2num(startdate), mdates.date2num(enddate))
     ax.xaxis.set_major_locator(locator)
     ax.xaxis.set_major_formatter(date_formatter)
     
