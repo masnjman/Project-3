@@ -29,36 +29,51 @@ def get_time_series():
     print("1. Intraday\n2. Daily\n3. Weekly\n4. Monthly")
     while(True):
         try:
-            time_series = int(input("Enter time series option (1, 2, 3, 4): "))
-            if time_series < 1 or time_series > 4:
+            choice = int(input("Enter time series option (1, 2, 3, 4): "))
+            if choice < 1 or choice > 4:
                 print("please enter only a 1, 2, 3, or 4")
                 continue
         except Exception as err:
             print(err)
         else:
             break
+    if choice == 1:
+        time_series = "TIME_SERIES_INTRADAY_ADJUSTED"
+    elif choice == 2:
+        time_series = "TIME_SERIES_DAILY_ADJUSTED"
+    elif choice == 3:
+        time_series = "TIME_SERIES_WEEKLY_ADJUSTED"
+    else:
+        time_series = "TIME_SERIES_MONTHLY_ADJUSTED"
     return time_series
+
+def bar_chart():
+
+def line_chart():
 
 def main():
     data = av_query("IBM", "TIME_SERIES_MONTHLY_ADJUSTED")
     
+    
     print("Stock Data Visualizer")
     print("---------------------")
+    stock_symbol = input("Enter the stock symbol you are looing for: ")
     chart_type = get_chart_type()
     time_series = get_time_series()
     start_date = input("Enter the start Date (YYYY-MM-DD): ")
     end_date = input("Enter the start Date (YYYY-MM-DD): ")
 
-    #Im trying to understand how to get the data we need from the user input
-    #I dont really understand how to access the items from the dictionary
+    mydata = av_query(stock_symbol, time_series)
+    
+    print()
 
-    print("\nMeta data:")
-    for item in data["Meta Data"]:
-        print(item)
-    print("\nMonthly Adjusted Time Series")
-    for item in data["Monthly Adjusted Time Series"]:
-        print(item)
-        
+
+    if chart_type == 1:
+        bar_chart(the_data)
+    else:
+        line_chart(the_data)
+
+
 
     
 main()
