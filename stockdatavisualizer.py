@@ -40,11 +40,17 @@ def menu():
         function = "TIME_SERIES_WEEKLY"
     elif choice == 2:
         function = "TIME_SERIES_MONTHLY"
-
-    print(function)
     print()
-    startdate = input("Enter the beginning date in YYYY-MM-DD format: ")
-    enddate = input("Enter the end date in YYYY-MM-DD format: ")
+    while True:
+        try:
+            startdate = datetime.strptime(input("Enter the beginning date in YYYY-MM-DD format: "), '%Y-%m-%d' )
+            enddate = datetime.strptime(input("Enter the end date in YYYY-MM-DD format: "), '%Y-%m-%d')
+            if startdate > enddate:
+                raise ValueError("Start date is after end date.")
+        except ValueError as e:
+            print(e)
+        else:
+            break
     return (stocksymbol, function, startdate, enddate)
         
 def graphData(data, function, startdate, enddate):
@@ -78,7 +84,7 @@ def graphData(data, function, startdate, enddate):
     ax.plot(x_values, opening_prices, '-o', label="Open")
     ax.plot(x_values, high_prices, '-o', label="High")
     ax.plot(x_values, low_prices, '-o', label="Low")
-    ax.plot(x_values, closing_prices, '-o', label="closing")
+    ax.plot(x_values, closing_prices, '-o', label="Closing")
     ax.legend()
     ax.set_title(function)
     
@@ -95,7 +101,6 @@ def graphData(data, function, startdate, enddate):
 def main():
     choices = menu()
     data = AV_Query(choices[0], choices[1])
-    print(data)
     graphData(data, choices[1], choices[2], choices[3])
   
 main()
