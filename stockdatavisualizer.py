@@ -48,8 +48,10 @@ def get_time_series():
     return time_series
 
 def bar_chart():
+    return
 
 def line_chart():
+    return
 
 def main():
     data = av_query("IBM", "TIME_SERIES_MONTHLY_ADJUSTED")
