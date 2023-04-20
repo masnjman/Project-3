@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Stock Visualization</title>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    </head>
+    <body>
+        <h1>Stock Visualization</h1>
+        <form id="stockForm" method="post" action="/submit">
+            <label for="symbol">Enter stock symbol:</label>
+            <input type="text" name="symbol" id="symbol" required>
+            <br>
+            <label for="function">Select time series function:</label>
+            <select name="function" id="function" required>
+                <option value="TIME_SERIES_WEEKLY">Weekly</option>
+                <option value="TIME_SERIES_MONTHLY">Monthly</option>
+            </select>
+            <br>
+            <label for="startdate">Enter start date (YYYY-MM-DD):</label>
+            <input type="date" name="startdate" id="startdate" required>
+            <br>
+            <label for="enddate">Enter end date (YYYY-MM-DD):</label>
+            <input type="date" name="enddate" id="enddate" required>
+            <br>
+            <input type="submit" value="Submit">
+        </form>
+        <div id="plot"></div>
+        <script>
+            // Submit form using Ajax
+            $('#stockForm').submit(function(event) {
+                event.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    url: '/submit',
+                    data: $(this).serialize(),
+                    success: function(data) {
+                        // Update plot with new data
+                        Plotly.newPlot('plot', data);
+                    },
+                    error: function() {
+                        alert('Error occurred while fetching stock data.');
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>

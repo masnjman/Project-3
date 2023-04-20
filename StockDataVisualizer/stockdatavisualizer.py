@@ -1,7 +1,17 @@
+from flask import Flask, render_template, request
 import requests
 import matplotlib.pyplot as plt, mpld3
 import matplotlib.dates as mdates
 from datetime import datetime
+
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    data = menu()
+    graph_data = graphData(data[0], data[1], data[2], data[3])
+    # Code for rendering the home page
+    return render_template('home.html', data=graph_data)
 
 def AV_Query(symbol, function):
     apikey = "T6IGSBW0GEMTVTMA"
